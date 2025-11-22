@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/vshulcz/ozon_price_tracker/compare/v0.3.0...v0.4.0) (2025-11-22)
+
+
+### Features
+
+* security upgraded ([05248a6](https://github.com/vshulcz/ozon_price_tracker/commit/05248a628f3fecae9f544145ec844b9591f36bf6))
+
 ## [0.3.0](https://github.com/vshulcz/ozon_price_tracker/compare/v0.2.0...v0.3.0) (2025-11-22)
 
 
