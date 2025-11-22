@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.2.0](https://github.com/vshulcz/ozon_price_tracker/compare/v0.1.1...v0.2.0) (2025-11-22)
+
+
+### Features
+
+* argocd, k8s, cd workflow added ([2df2d25](https://github.com/vshulcz/ozon_price_tracker/commit/2df2d2597dd10199ef73c42d22e342541b43f398))
+* argocd, k8s, cd workflow added ([eab61f6](https://github.com/vshulcz/ozon_price_tracker/commit/eab61f6313a80961ed6ba6857fa7923a68406d8f))
+
+
+### Documentation
+
+* readme updated ([d7bc852](https://github.com/vshulcz/ozon_price_tracker/commit/d7bc85266d1f750b8325f959b021189332217bbe))
+* readme updated ([85a4afa](https://github.com/vshulcz/ozon_price_tracker/commit/85a4afaf063e16d6ef16798d4cf8aeee3b20d4ac))
+
 ## [0.1.1](https://github.com/vshulcz/ozon_price_tracker/compare/v0.1.0...v0.1.1) (2025-11-04)
 
 
