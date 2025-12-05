@@ -21,6 +21,6 @@ def extract_user_data(user: User) -> TelegramUserData:
         username=user.username,
         first_name=user.first_name,
         last_name=user.last_name,
-        is_bot=user.is_bot,
-        is_premium=getattr(user, "is_premium", False),
+        is_bot=user.is_bot or False,
+        is_premium=getattr(user, "is_premium", None) or False,
     )
