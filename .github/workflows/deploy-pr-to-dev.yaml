@@ -28,41 +28,68 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Find PR details
+      - name: Find PR details and latest built image
         id: find
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          if [ -n "${{ inputs.pr_number }}" ]; then
-            PR_NUMBER="${{ inputs.pr_number }}"
-            echo "📝 Manual trigger: deploying PR #${PR_NUMBER}"
-          else
-            PR_NUMBER="${{ github.event.pull_request.number }}"
-            echo "🤖 Auto trigger: deploying PR #${PR_NUMBER}"
-          fi
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = '${{ inputs.pr_number }}' || context.payload.pull_request.number;
+            console.log(`📝 Finding latest built image for PR #${prNumber}`);
 
-          # Получаем информацию о PR
-          PR_DATA=$(gh pr view ${PR_NUMBER} --json headRefName,headRefOid)
+            // Get PR details
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: parseInt(prNumber)
+            });
 
-          BRANCH=$(echo "$PR_DATA" | jq -r '.headRefName')
+            const branch = pr.head.ref;
+            console.log(`Branch: ${branch}`);
 
-          # Fetch latest commit from the branch to get fresh SHA
-          git fetch origin ${BRANCH}
-          SHA=$(git rev-parse origin/${BRANCH})
-          SHORT_SHA=$(echo "$SHA" | cut -c1-7)
+            // Get all commits from the PR
+            const { data: commits } = await github.rest.pulls.listCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: parseInt(prNumber),
+              per_page: 100
+            });
 
-          # Image tag format: sha-{short_sha}
-          IMAGE_TAG="sha-${SHORT_SHA}"
+            console.log(`Found ${commits.length} commits in PR`);
 
-          echo "branch=${BRANCH}" >> $GITHUB_OUTPUT
-          echo "tag=${IMAGE_TAG}" >> $GITHUB_OUTPUT
-          echo "sha=${SHA}" >> $GITHUB_OUTPUT
-          echo "pr_number=${PR_NUMBER}" >> $GITHUB_OUTPUT
+            // Check each commit (from newest to oldest) to find one with successful docker build
+            for (const commit of commits.reverse()) {
+              const sha = commit.sha;
+              const shortSha = sha.substring(0, 7);
 
-          echo "✅ Found PR #${PR_NUMBER}"
-          echo "Branch: ${BRANCH}"
-          echo "SHA: ${SHA}"
-          echo "Image tag: ${IMAGE_TAG}"
+              console.log(`\nChecking commit ${shortSha}...`);
+
+              // Get check runs for this commit
+              const { data: checkRuns } = await github.rest.checks.listForRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: sha
+              });
+
+              // Find docker check
+              const dockerCheck = checkRuns.check_runs.find(
+                check => check.name === 'docker' || check.name === 'CI / docker'
+              );
+
+              if (dockerCheck && dockerCheck.status === 'completed' && dockerCheck.conclusion === 'success') {
+                const imageTag = `sha-${shortSha}`;
+                console.log(`✅ Found successful build: ${imageTag}`);
+
+                core.setOutput('branch', branch);
+                core.setOutput('tag', imageTag);
+                core.setOutput('sha', sha);
+                core.setOutput('pr_number', prNumber.toString());
+                return;
+              } else {
+                console.log(`❌ No successful docker build for ${shortSha}`);
+              }
+            }
+
+            throw new Error(`No successful docker builds found in PR #${prNumber}`);
 
   wait-for-ci:
     name: Wait for CI
