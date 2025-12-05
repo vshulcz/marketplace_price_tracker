@@ -13,7 +13,7 @@ labels:
 
 images:
 - name: ghcr.io/vshulcz/ozon_price_tracker
-  newTag: "sha-6fe650c"
+  newTag: "sha-c5b32eb"
 
 patches:
 - path: patches/bot-resources.yaml
