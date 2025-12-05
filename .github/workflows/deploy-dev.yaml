@@ -1,0 +1,161 @@
+name: Deploy to Dev
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'Image tag to deploy (e.g., sha-abc1234, 0.4.1, latest)'
+        required: true
+        type: string
+        default: 'latest'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  deploy-dev:
+    name: Deploy to Dev Environment
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+      url: https://github.com/${{ github.repository }}/deployments
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Verify image exists
+        run: |
+          echo "Verifying image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}"
+
+          # Try to pull image metadata (without actually pulling the image)
+          if docker manifest inspect ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }} > /dev/null 2>&1; then
+            echo "✅ Image exists and is accessible"
+          else
+            echo "⚠️  Warning: Could not verify image existence (might be private or not exist)"
+            echo "Proceeding anyway..."
+          fi
+
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v2
+
+      - name: Update kustomization.yaml
+        working-directory: k8s/overlays/dev
+        env:
+          IMAGE_TAG: ${{ inputs.image_tag }}
+        run: |
+          set -euo pipefail
+
+          echo "Updating dev overlay with image tag: ${IMAGE_TAG}"
+
+          if [ ! -f "kustomization.yaml" ]; then
+            echo "❌ Dev overlay not found"
+            exit 1
+          fi
+
+          cp kustomization.yaml kustomization.yaml.backup
+
+          sed -i.bak "s|newTag:.*|newTag: \"${IMAGE_TAG}\"|g" kustomization.yaml
+          rm -f kustomization.yaml.bak
+
+          echo "✅ Updated dev kustomization.yaml"
+          echo ""
+          echo "Changes:"
+          diff kustomization.yaml.backup kustomization.yaml || true
+          rm -f kustomization.yaml.backup
+
+      - name: Commit and push changes
+        env:
+          IMAGE_TAG: ${{ inputs.image_tag }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add k8s/overlays/dev/kustomization.yaml
+
+          if git diff --staged --quiet; then
+            echo "⚠️  No changes to commit (tag already set to ${IMAGE_TAG})"
+            exit 0
+          fi
+
+          git commit -m "chore(k8s): deploy ${IMAGE_TAG} to dev" \
+            -m "" \
+            -m "Deployed by: @${{ github.actor }}" \
+            -m "Workflow: ${{ github.workflow }}" \
+            -m "Run: ${{ github.run_id }}"
+
+          git push
+
+      - name: Summary
+        env:
+          IMAGE_TAG: ${{ inputs.image_tag }}
+        run: |
+          cat >> $GITHUB_STEP_SUMMARY <<EOF
+          ## 🚀 Dev Deployment Initiated
+
+          **Environment:** \`dev\`
+          **Image Tag:** \`${IMAGE_TAG}\`
+          **Full Image:** \`${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${IMAGE_TAG}\`
+          **Deployed by:** @${{ github.actor }}
+
+          ### What's Next?
+
+          ArgoCD will automatically sync the changes within 1-2 minutes.
+
+          ### Monitor Deployment
+
+          \`\`\`bash
+          # Check pod status
+          kubectl get pods -n ozon-bot-dev -w
+
+          # View bot logs
+          kubectl logs -f -l app=ozon-bot -n ozon-bot-dev
+
+          # Check ArgoCD status
+          argocd app get ozon-bot-dev
+          \`\`\`
+
+          ### Verify Image
+
+          \`\`\`bash
+          # Check what's running
+          kubectl get deployment ozon-bot -n ozon-bot-dev -o jsonpath='{.spec.template.spec.containers[0].image}'
+
+          # Check deployment status
+          kubectl rollout status deployment/ozon-bot -n ozon-bot-dev
+          \`\`\`
+
+          ### Rollback (if needed)
+
+          \`\`\`bash
+          # Via kubectl
+          kubectl rollout undo deployment/ozon-bot -n ozon-bot-dev
+
+          # Or re-run this workflow with previous tag
+          \`\`\`
+
+          ### Available Tags
+
+          You can deploy any of these tags:
+          - \`latest\` - Latest main branch build
+          - \`sha-abc1234\` - Specific commit (from CI builds)
+          - \`0.4.1\` - Semantic version (from releases)
+
+          Check available tags: https://github.com/${{ github.repository }}/pkgs/container/ozon_price_tracker
+
+          ---
+
+          **Workflow Run:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EOF
+
+      - name: Trigger ArgoCD refresh (optional)
+        run: |
+          echo "💡 Tip: ArgoCD auto-sync is enabled, no manual trigger needed"
+          echo "If you want to force sync immediately, run:"
+          echo "  argocd app sync ozon-bot-dev --force"
