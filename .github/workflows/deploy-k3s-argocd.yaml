@@ -18,10 +18,6 @@ on:
         required: false
         type: string
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
-
 jobs:
   wait-for-ci:
     name: Wait for CI
@@ -183,7 +179,7 @@ jobs:
 
           **Environment:** \`${ENVIRONMENT}\`
           **Image Tag:** \`${IMAGE_TAG}\`
-          **Image:** \`${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${IMAGE_TAG}\`
+          **Image:** \`ghcr.io/${{ github.repository }}:${IMAGE_TAG}\`
           **Deployed by:** @${{ github.actor }}
 
           ### Next Steps
@@ -195,23 +191,23 @@ jobs:
           2. **Verify Deployment**
              \`\`\`bash
              # Check pod status
-             kubectl get pods -n ozon-bot-${ENVIRONMENT}
+             kubectl get pods -n marketplace-bot-${ENVIRONMENT}
 
              # Watch pod restart
-             kubectl get pods -n ozon-bot-${ENVIRONMENT} -w
+             kubectl get pods -n marketplace-bot-${ENVIRONMENT} -w
 
              # View logs
-             kubectl logs -f -l app=ozon-bot -n ozon-bot-${ENVIRONMENT}
+             kubectl logs -f -l app=marketplace-bot -n marketplace-bot-${ENVIRONMENT}
 
              # Check ArgoCD status
-             argocd app get ozon-bot-${ENVIRONMENT}
+             argocd app get marketplace-bot-${ENVIRONMENT}
              \`\`\`
 
           3. **Rollback (if needed)**
              \`\`\`bash
              # Via ArgoCD UI: History → Select version → Rollback
              # Via CLI:
-             argocd app rollback ozon-bot-${ENVIRONMENT}
+             argocd app rollback marketplace-bot-${ENVIRONMENT}
 
              # Or re-run this workflow with previous image tag
              \`\`\`
@@ -220,13 +216,13 @@ jobs:
 
           \`\`\`bash
           # Force ArgoCD hard refresh
-          argocd app sync ozon-bot-${ENVIRONMENT} --force
+          argocd app sync marketplace-bot-${ENVIRONMENT} --force
 
           # Check deployment status
-          kubectl rollout status deployment/ozon-bot -n ozon-bot-${ENVIRONMENT}
+          kubectl rollout status deployment/marketplace-bot -n marketplace-bot-${ENVIRONMENT}
 
           # Get deployment history
-          kubectl rollout history deployment/ozon-bot -n ozon-bot-${ENVIRONMENT}
+          kubectl rollout history deployment/marketplace-bot -n marketplace-bot-${ENVIRONMENT}
           \`\`\`
 
           ---

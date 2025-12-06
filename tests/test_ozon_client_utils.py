@@ -5,7 +5,7 @@ import pytest
 
 from app.services.ozon_client import (
     OzonBlockedError,
-    ProductInfo,
+    OzonProductInfo,
     _normalize_price,
     _SeleniumBrowser,
     _to_www,
@@ -55,16 +55,18 @@ def test_to_www_with_different_subdomains():
 
 
 def test_product_info_price_for_compare():
-    info1 = ProductInfo(title="Test", price_with_card=Decimal("100"), price_no_card=Decimal("150"))
+    info1 = OzonProductInfo(
+        title="Test", price_with_card=Decimal("100"), price_no_card=Decimal("150")
+    )
     assert info1.price_for_compare == Decimal("100")
 
-    info2 = ProductInfo(title="Test", price_with_card=None, price_no_card=Decimal("150"))
+    info2 = OzonProductInfo(title="Test", price_with_card=None, price_no_card=Decimal("150"))
     assert info2.price_for_compare == Decimal("150")
 
-    info3 = ProductInfo(title="Test", price_with_card=Decimal("100"), price_no_card=None)
+    info3 = OzonProductInfo(title="Test", price_with_card=Decimal("100"), price_no_card=None)
     assert info3.price_for_compare == Decimal("100")
 
-    info4 = ProductInfo(title="Test", price_with_card=None, price_no_card=None)
+    info4 = OzonProductInfo(title="Test", price_with_card=None, price_no_card=None)
     assert info4.price_for_compare is None
 
 

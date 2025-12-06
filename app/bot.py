@@ -20,7 +20,7 @@ from app.handlers import start as start_handlers
 from app.middlewares.db_session import DBSessionMiddleware
 from app.middlewares.errors import ErrorsMiddleware
 from app.scheduler import setup_scheduler
-from app.services.ozon_client import shutdown_browser
+from app.services.marketplace_client import shutdown_browser
 
 
 async def setup_bot_commands(bot: Bot) -> None:
