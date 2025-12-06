@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.5.0](https://github.com/vshulcz/ozon_price_tracker/compare/v0.4.0...v0.5.0) (2025-12-06)
+
+
+### Features
+
+* **ci:** add new workflow - deploy on dev ([d30e157](https://github.com/vshulcz/ozon_price_tracker/commit/d30e1572300b12f18d6e27c29e44546ceffef4bb))
+* **ci:** auto-comment PR with deployment instructions after build ([490dfc6](https://github.com/vshulcz/ozon_price_tracker/commit/490dfc686d224827dc21d7921be02529eca864d5))
+* migrate from Playwright to Selenium with stealth mode ([e1ba70f](https://github.com/vshulcz/ozon_price_tracker/commit/e1ba70f97792dc5108e627b87e71a1acac3d15a0))
+* migrate from Playwright to Selenium with stealth mode ([3a6bf23](https://github.com/vshulcz/ozon_price_tracker/commit/3a6bf23cd755d32c0e1aa23354492ffb7330b102))
+
+
+### Bug Fixes
+
+* **ci:** add fetch-depth 0 for git fetch to work ([26f9049](https://github.com/vshulcz/ozon_price_tracker/commit/26f90496d007704eba44c7de58ef08f7646d8aa0))
+* **ci:** fetch fresh SHA from branch instead of cached PR data ([45aa3d2](https://github.com/vshulcz/ozon_price_tracker/commit/45aa3d2b11a002d058a8d9a11332cf301184492b))
+* **ci:** find latest successfully built image instead of latest commit ([653d4a3](https://github.com/vshulcz/ozon_price_tracker/commit/653d4a3afc0f07bc1de9851f71c9e4c9ef8f7361))
+* **ci:** simplify deploy workflow - manual image tag input ([c4de684](https://github.com/vshulcz/ozon_price_tracker/commit/c4de684559a437bac3d9c1938f819816b0d2ea10))
+* **db:** handle None values for is_bot and is_premium ([c2a2101](https://github.com/vshulcz/ozon_price_tracker/commit/c2a210165ce674e489382c97b574c15e1d02ae96))
+* **docker:** update Playwright image to v1.56.0-noble ([6fe650c](https://github.com/vshulcz/ozon_price_tracker/commit/6fe650c258272034ca7871f35466f0ac1accb8a3))
+* **k8s:** prod autodeploy ([434bf9f](https://github.com/vshulcz/ozon_price_tracker/commit/434bf9f7471af1668a45c2972ed11224d2b52d24))
+* **k8s:** prod autodeploy ([132709c](https://github.com/vshulcz/ozon_price_tracker/commit/132709c395bcfdd28a13bf7e782766aa6b150f5f))
+* **k8s:** reduce production resource requests ([9ffc05c](https://github.com/vshulcz/ozon_price_tracker/commit/9ffc05cd39d898b31ede4c9cfc3e8a23b71ab52d))
+* **telegram:** handle None values for is_bot and is_premium ([d632995](https://github.com/vshulcz/ozon_price_tracker/commit/d632995b9d42e0a6b4224d74d69865ee7c3d8347))
+
 ## [0.4.0](https://github.com/vshulcz/ozon_price_tracker/compare/v0.3.0...v0.4.0) (2025-11-22)
 
 
