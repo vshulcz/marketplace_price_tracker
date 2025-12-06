@@ -48,9 +48,11 @@ async def test_scheduler_deal_transitions(
     monkeypatch.setattr(products_repo, "list_all_active", _only_one)
 
     async def fake_fetch(url: str):
-        from app.services.ozon_client import ProductInfo
+        from app.services.ozon_client import OzonProductInfo
 
-        return ProductInfo(title="Cool Thing", price_no_card=Decimal("95.00"), price_with_card=None)
+        return OzonProductInfo(
+            title="Cool Thing", price_no_card=Decimal("95.00"), price_with_card=None
+        )
 
     monkeypatch.setattr("app.scheduler.fetch_product_info", fake_fetch)
 
@@ -86,9 +88,9 @@ async def test_scheduler_deal_transitions(
     assert latest and latest[0] == 95.00
 
     async def fake_fetch_high(url: str):
-        from app.services.ozon_client import ProductInfo
+        from app.services.ozon_client import OzonProductInfo
 
-        return ProductInfo(
+        return OzonProductInfo(
             title="Cool Thing", price_no_card=Decimal("130.00"), price_with_card=None
         )
 
@@ -123,9 +125,9 @@ async def test_scheduler_skips_when_no_price(
     monkeypatch.setattr(products_repo, "list_all_active", _only_one)
 
     async def fake_fetch(url: str):
-        from app.services.ozon_client import ProductInfo
+        from app.services.ozon_client import OzonProductInfo
 
-        return ProductInfo(title="No Price", price_no_card=None, price_with_card=None)
+        return OzonProductInfo(title="No Price", price_no_card=None, price_with_card=None)
 
     monkeypatch.setattr("app.scheduler.fetch_product_info", fake_fetch)
 
@@ -177,9 +179,9 @@ async def test_scheduler_skips_when_user_missing(
     monkeypatch.setattr(products_repo, "list_all_active", _only_one)
 
     async def fake_fetch(url: str):
-        from app.services.ozon_client import ProductInfo
+        from app.services.ozon_client import OzonProductInfo
 
-        return ProductInfo(title="Orphan", price_no_card=Decimal("9.00"), price_with_card=None)
+        return OzonProductInfo(title="Orphan", price_no_card=Decimal("9.00"), price_with_card=None)
 
     monkeypatch.setattr("app.scheduler.fetch_product_info", fake_fetch)
 

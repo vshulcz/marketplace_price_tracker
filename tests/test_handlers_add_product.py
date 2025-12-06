@@ -7,10 +7,11 @@ from app.repositories.products import MAX_PRODUCTS_PER_USER
 
 
 class _PI:
-    def __init__(self, title="Item", price_no_card=None, price_with_card=None):
+    def __init__(self, title="Item", price_with_card=None, price_no_card=None, marketplace="ozon"):
         self.title = title
-        self.price_no_card = price_no_card
         self.price_with_card = price_with_card
+        self.price_no_card = price_no_card
+        self.marketplace = marketplace
 
     @property
     def price_for_compare(self):
@@ -53,7 +54,7 @@ async def test_got_url_invalid(dummy_message, users_repo, products_repo, fsm):
     await fsm.set_state(AddProduct.waiting_for_url)
     dummy_message.text = "https://example.com/not-ozon"
     await got_url(dummy_message, users_repo, products_repo, fsm)
-    assert any("это не ссылка Ozon" in a["text"] for a in dummy_message.answers)
+    assert any("не поддерживаемый маркетплейс" in a["text"] for a in dummy_message.answers)
     assert await fsm.get_state() == AddProduct.waiting_for_url.state
 
 
@@ -111,7 +112,9 @@ async def test_got_url_success_to_wait_target(
     dummy_message.text = "https://www.ozon.ru/item/102"
 
     async def _ok(url):
-        return _PI(title="Chair", price_no_card=Decimal("123.45"), price_with_card=None)
+        return _PI(
+            title="Chair", price_with_card=None, price_no_card=Decimal("123.45"), marketplace="ozon"
+        )
 
     monkeypatch.setattr("app.handlers.add_product.fetch_product_info", _ok)
 

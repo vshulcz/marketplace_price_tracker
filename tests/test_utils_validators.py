@@ -2,22 +2,7 @@ from decimal import Decimal
 
 import pytest
 
-from app.utils.validators import is_ozon_url, parse_price
-
-
-@pytest.mark.parametrize(
-    "url, ok",
-    [
-        ("https://www.ozon.ru/product/abc", True),
-        ("http://ozon.ru/some/path", True),
-        ("https://m.ozon.ru/item/1", False),
-        ("https://not-ozon.ru/", False),
-        ("", False),
-        ("ftp://ozon.ru/what", False),
-    ],
-)
-def test_is_ozon_url(url, ok):
-    assert is_ozon_url(url) is ok
+from app.utils.validators import is_marketplace_url, parse_price
 
 
 @pytest.mark.parametrize(
@@ -36,3 +21,23 @@ def test_parse_price_ok(text, value):
 @pytest.mark.parametrize("text", ["0", "-1", "abc", "", " ", ",,,", "0,00"])
 def test_parse_price_bad(text):
     assert parse_price(text) is None
+
+
+@pytest.mark.parametrize(
+    "url, ok",
+    [
+        ("https://www.ozon.ru/product/abc", True),
+        ("http://ozon.ru/some/path", True),
+        ("https://www.wildberries.ru/catalog/123456789/detail.aspx", True),
+        ("https://wildberries.ru/catalog/987654321/detail.aspx", True),
+        ("https://www.wb.ru/catalog/12345/detail.aspx", True),
+        ("http://wb.ru/catalog/999999/detail.aspx", True),
+        ("https://m.ozon.ru/item/1", False),
+        ("https://wildberries.ru/", False),
+        ("https://not-ozon.ru/", False),
+        ("", False),
+        ("ftp://ozon.ru/what", False),
+    ],
+)
+def test_is_marketplace_url(url, ok):
+    assert is_marketplace_url(url) is ok

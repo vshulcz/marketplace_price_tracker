@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ozon-bot-dev
+  name: marketplace-bot-dev
   namespace: argocd
   labels:
-    app: ozon-price-tracker
+    app: marketplace-price-tracker
     environment: dev
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -12,13 +12,13 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/vshulcz/ozon_price_tracker.git
+    repoURL: https://github.com/vshulcz/marketplace_price_tracker.git
     targetRevision: main
     path: k8s/overlays/dev
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: ozon-bot-dev
+    namespace: marketplace-bot-dev
 
   syncPolicy:
     automated:

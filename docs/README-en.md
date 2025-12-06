@@ -8,7 +8,7 @@
 
 ## Overview
 
-This documentation covers the complete setup process for deploying the Ozon Price Tracker bot using Kubernetes (K3s) and GitOps practices with ArgoCD.
+This documentation covers the complete setup process for deploying the Marketplace Price Tracker bot using Kubernetes (K3s) and GitOps practices with ArgoCD.
 
 ### What's Covered
 

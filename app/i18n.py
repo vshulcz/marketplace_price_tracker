@@ -23,17 +23,17 @@ i18n = I18N(
     messages={
         "ru": {
             # App
-            "app.name": "Трекер цен Ozon",
+            "app.name": "Трекер цен маркетплейсов",
             # Menu
             "menu.add": "➕ Добавить товар",  # noqa: RUF001
             "menu.list": "📋 Список товаров",
             "menu.settings": "⚙️ Настройки",
             "menu.back": "🏠 В главное меню",  # noqa: RUF001
             # Start
-            "start.title": "Привет! Я - бот для отслеживания цен на Ozon.",
+            "start.title": "Привет! Я - бот для отслеживания цен маркетплейсов.",
             "start.body": (
-                "Добавляй товары по ссылке, указывай целевую цену - и я оповещу, "
-                "когда цена станет выгодной.\n\n"
+                "Добавляй товары по ссылке с Ozon или Wildberries, указывай целевую цену - "  # noqa: RUF001
+                "я оповещу, когда цена станет выгодной.\n\n"
                 "Доступные разделы:\n"
                 "• ➕ Добавить товар - начать мастер добавления\n"  # noqa: RUF001
                 "• 📋 Список товаров - посмотреть и управлять\n"
@@ -41,9 +41,9 @@ i18n = I18N(
             ),
             # Add Product
             "add.title": "Добавление товара",
-            "add.ask_url": "Пришлите ссылку на товар Ozon",
-            "add.invalid_url": "Кажется, это не ссылка Ozon. "
-            "Отправьте корректный URL вида https://www.ozon...",
+            "add.ask_url": "Пришлите ссылку на товар Ozon или Wildberries",
+            "add.invalid_url": "Кажется, это не поддерживаемый маркетплейс. "
+            "Отправьте корректный URL вида https://www.ozon... или https://www.wildberries...",
             "add.duplicate": "Этот товар уже добавлен. "
             "Вы можете изменить целевую цену из списка товаров.",
             "add.limit_reached": "Достигнут лимит в 20 товаров. "
@@ -58,9 +58,9 @@ i18n = I18N(
 Текущая цена: <b>{current}</b>
 Целевая цена: <b>{target}</b>""",
             "add.cancel": "Добавление отменено. Возвращаю в меню.",
-            "add.fetching": "Подождите, ищу информацию о товаре на Ozon...",  # noqa: RUF001
-            "add.fetch_error": "Не удалось получить данные с Ozon. Попробуйте позже.",  # noqa: RUF001
-            "add.fetch_blocked": "Ozon блокирует доступ (antibot). Попробуйте позже.",
+            "add.fetching": "Подождите, ищу информацию о товаре на маркетплейсе...",  # noqa: RUF001
+            "add.fetch_error": "Не удалось получить данные с маркетплейса. Попробуйте позже.",  # noqa: RUF001
+            "add.fetch_blocked": "Маркетплейс блокирует доступ (antibot). Попробуйте позже.",
             "add.with_card_label": "С картой",  # noqa: RUF001
             "add.no_card_label": "Без карты",
             # List and product card
@@ -84,7 +84,7 @@ i18n = I18N(
             "settings.lang.en": "🇬🇧 English",
             "settings.lang.changed": "Готово! Язык переключён на {lang_name}.",
             # Scheduler / Notifications
-            "sched.started": "Планировщик обновления цен запущен (09:00, 21:00).",
+            "sched.started": "Планировщик обновления цен запущен (09:00, 15:00, 21:00).",
             "notif.deal_reached": """🎉 Товар «{title}» достиг целевой цены!
 Сейчас: <b>{current}</b> ≤ цель <b>{target}</b>.""",
             "notif.deal_over": """ℹ️ Цена на товар «{title}» снова выше цели.
@@ -99,16 +99,17 @@ i18n = I18N(
         },
         "en": {
             # App
-            "app.name": "Ozon Price Tracker",
+            "app.name": "Marketplace Price Tracker",
             # Menu
             "menu.add": "➕ Add product",  # noqa: RUF001
             "menu.list": "📋 Products",
             "menu.settings": "⚙️ Settings",
             "menu.back": "🏠 Main menu",
             # Start
-            "start.title": "Hi! I help you track Ozon product prices.",
+            "start.title": "Hi! I help you track marketplace prices.",
             "start.body": (
-                "Send a product link and a target price - I'll notify you when the price drops.\n\n"
+                "Send an Ozon or Wildberries product link plus a target price - I'll notify you "
+                "when the price drops.\n\n"
                 "Available sections:\n"
                 "• ➕ Add product - start the add wizard\n"  # noqa: RUF001
                 "• 📋 Products - view & manage\n"
@@ -116,9 +117,9 @@ i18n = I18N(
             ),
             # Add Product
             "add.title": "Add product",
-            "add.ask_url": "Send an Ozon product link",
-            "add.invalid_url": "This doesn't look like an Ozon link. "
-            "Please send a valid https://www.ozon... URL.",
+            "add.ask_url": "Send an Ozon or Wildberries product link",
+            "add.invalid_url": "This doesn't look like a supported marketplace link. "
+            "Please send a valid https://www.ozon... or https://www.wildberries... URL.",
             "add.duplicate": "This product is already tracked. "
             "You can change target price from the list.",
             "add.limit_reached": "You've reached the 20 products limit. "
@@ -133,9 +134,9 @@ Link: {url}
 Current price: <b>{current}</b>
 Target price: <b>{target}</b>""",
             "add.cancel": "Adding cancelled. Back to menu.",
-            "add.fetching": "Fetching product info from Ozon... please wait.",
-            "add.fetch_error": "Failed to fetch data from Ozon. Please try again later.",
-            "add.fetch_blocked": "Ozon blocked the request (antibot). Please try again later.",
+            "add.fetching": "Fetching product info from the marketplace... please wait.",
+            "add.fetch_error": "Failed to fetch data from the marketplace. Please try again later.",
+            "add.fetch_blocked": "The marketplace blocked the request (antibot). Please try again later.",  # noqa: E501
             "add.with_card_label": "With card",
             "add.no_card_label": "Without card",
             # List and product card
@@ -159,7 +160,7 @@ Target price: <b>{target}</b>""",
             "settings.lang.en": "🇬🇧 English",
             "settings.lang.changed": "Done! Language set to {lang_name}.",
             # Scheduler / Notifications
-            "sched.started": "Price refresh scheduler started (09:00, 21:00).",
+            "sched.started": "Price refresh scheduler started (09:00, 15:00, 21:00).",
             "notif.deal_reached": """🎉 Deal! “{title}” reached the target.
 Now: <b>{current}</b> ≤ target <b>{target}</b>.""",
             "notif.deal_over": """ℹ️ “{title}” is no longer below target.

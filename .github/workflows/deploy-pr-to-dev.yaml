@@ -8,10 +8,6 @@ on:
         required: true
         type: string
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
-
 jobs:
   validate:
     name: Validate Image Tag
@@ -37,7 +33,7 @@ jobs:
           ## 🚀 Dev Deployment Validation
 
           **Image Tag:** \`${{ inputs.image_tag }}\`
-          **Full Image:** \`${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_tag }}\`
+          **Full Image:** \`ghcr.io/${{ github.repository }}:${{ inputs.image_tag }}\`
 
           Proceeding to update dev overlay...
           EOF
@@ -112,25 +108,25 @@ jobs:
           cat >> $GITHUB_STEP_SUMMARY <<EOF
           ## ✅ Deployed to Dev
 
-          **Image:** \`${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${IMAGE_TAG}\`
-          **Namespace:** \`ozon-bot-dev\`
+          **Image:** \`ghcr.io/${{ github.repository }}:${IMAGE_TAG}\`
+          **Namespace:** \`marketplace-bot-dev\`
           **Deployed by:** @${{ github.actor }}
 
           ### Next Steps
 
           1. **Monitor ArgoCD Sync** (~2-3 minutes)
              - ArgoCD detects Git changes automatically
-             - Check status: \`argocd app get ozon-bot-dev\`
+             - Check status: \`argocd app get marketplace-bot-dev\`
 
           2. **Verify Deployment**
              \`\`\`bash
-             kubectl get pods -n ozon-bot-dev
-             kubectl logs -f -l app=ozon-bot -n ozon-bot-dev
+             kubectl get pods -n marketplace-bot-dev
+             kubectl logs -f -l app=marketplace-bot -n marketplace-bot-dev
              \`\`\`
 
           3. **Rollback if Needed**
              \`\`\`bash
-             argocd app rollback ozon-bot-dev
+             argocd app rollback marketplace-bot-dev
              \`\`\`
 
           ---
