@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: ozon-bot-prod
+namespace: marketplace-bot-prod
 
 resources:
   - namespace.yaml
@@ -11,12 +11,11 @@ resources:
 
 labels:
   - pairs:
-      app: ozon-price-tracker
+      app: marketplace-price-tracker
       managed-by: kustomize
 
 commonAnnotations:
-  description: "Ozon Price Tracker Bot - Telegram bot for tracking product prices"
-
+  description: "Marketplace Price Tracker Bot - Telegram bot for tracking marketplace prices"
 images:
-  - name: ghcr.io/vshulcz/ozon_price_tracker
+  - name: ghcr.io/vshulcz/marketplace_price_tracker
     newTag: latest

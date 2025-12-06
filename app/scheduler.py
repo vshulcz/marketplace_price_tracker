@@ -11,7 +11,7 @@ from app.i18n import Lang, i18n
 from app.keyboards.products import deal_reached_kb
 from app.repositories.products import ProductsRepo
 from app.repositories.users import PostgresUserRepo
-from app.services.ozon_client import fetch_product_info
+from app.services.marketplace_client import fetch_product_info
 from app.utils.logging import log_notification_sent, log_price_check, log_scheduler_event
 
 logger = logging.getLogger(__name__)

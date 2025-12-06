@@ -1,15 +1,15 @@
 <div align="center">
 
-# Ozon Price Tracker Bot
+# Marketplace Price Tracker Bot
 
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/vshulcz/ozon_price_tracker?sort=semver)
-[![CI](https://github.com/vshulcz/ozon_price_tracker/actions/workflows/ci.yml/badge.svg)](../../actions)
-[![codecov](https://codecov.io/gh/vshulcz/ozon_price_tracker/branch/main/graph/badge.svg)](https://codecov.io/gh/vshulcz/ozon_price_tracker)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/vshulcz/marketplace_price_tracker?sort=semver)
+[![CI](https://github.com/vshulcz/marketplace_price_tracker/actions/workflows/ci.yml/badge.svg)](../../actions)
+[![codecov](https://codecov.io/gh/vshulcz/marketplace_price_tracker/branch/main/graph/badge.svg)](https://codecov.io/gh/vshulcz/marketplace_price_tracker)
 ![license](https://img.shields.io/badge/license-MIT-blue)
 ![python](https://img.shields.io/badge/python-3.11+-blue)
 [![Telegram Demo](https://img.shields.io/badge/telegram-@mpricemonitoring__bot-2CA5E0?logo=telegram\&logoColor=white)](https://t.me/mpricemonitoring_bot)
 
-Телеграм‑бот для отслеживания цен на товары Ozon. Добавляйте ссылку на товар, задавайте целевую цену - бот проверяет цены 3 раза в день и присылает уведомление, когда цена стала выгодной.
+Телеграм‑бот для отслеживания цен маркетплейсов (Ozon и Wildberries). Добавляйте ссылку на товар, задавайте целевую цену - бот проверяет 3 раза в день и присылает уведомление, когда цена стала выгодной.
 
 [Попробовать бота](https://t.me/mpricemonitoring_bot) • [Документация](docs/README.md)
 
@@ -22,8 +22,8 @@
 ## Быстрый старт (Docker)
 
 ```bash
-git clone https://github.com/vshulcz/ozon_price_tracker.git
-cd ozon_price_tracker
+git clone https://github.com/vshulcz/marketplace_price_tracker.git
+cd marketplace_price_tracker
 
 cp .env.example .env # укажите BOT_TOKEN от @BotFather
 
@@ -32,10 +32,10 @@ make up && make logs
 
 ## Использование
 
-1. Нажмите "Добавить товар" и отправьте действительный URL-адрес продукта Ozon.
+1. Нажмите "Добавить товар" и отправьте ссылку на поддерживаемый маркетплейс (Ozon или Wildberries).
 2. Бот определит название продукта и текущую цену.
 3. Введите целевую цену.
-4. Продукт будет сохранен и появится в разделе "Товары". Вы можете открыть его карточку и отредактировать целевую цену, открыть Ozon или вернуться назад.
+4. Продукт будет сохранен и появится в разделе "Товары". Можно открыть карточку, отредактировать целевую цену, перейти к товару на маркетплейсе или вернуться назад.
 5. Планировщик запускается в 09:00, 15:00 и 21:00 (по времени сервера) и обновляет цены, сохраняя историю.
 6. Если текущее значение меньше целевого, вы получаете уведомление о достижении цели.
 7. Если позже текущее значение станет снова больше целевого, вы получаете уведомление.
@@ -54,7 +54,7 @@ make up && make logs
 
 ## Примечания
 
-* Используйте аккуратно и на свой риск: скрапинг может противоречить правилам Ozon.
+* Используйте аккуратно и на свой риск: скрапинг может противоречить правилам маркетплейсов.
 * Проект для демонстрационных/учебных целей.
 * Попробуйте демо: **[@mpricemonitoring_bot](https://t.me/mpricemonitoring_bot)**
 
