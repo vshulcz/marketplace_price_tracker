@@ -13,7 +13,7 @@ labels:
 
 images:
 - name: ghcr.io/vshulcz/marketplace_price_tracker
-  newTag: "sha-bd35fc5"
+  newTag: "sha-3b8fefc"
 
 patches:
 - path: patches/bot-resources.yaml
