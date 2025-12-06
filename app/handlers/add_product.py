@@ -13,14 +13,14 @@ from app.keyboards.common import cancel_kb
 from app.keyboards.main import main_menu_kb
 from app.repositories.products import MAX_PRODUCTS_PER_USER, ProductsRepo
 from app.repositories.users import PostgresUserRepo
-from app.services.ozon_client import fetch_product_info
+from app.services.marketplace_client import fetch_product_info
 from app.utils.logging import (
     log_callback_handler,
     log_error,
     log_message_handler,
     log_product_action,
 )
-from app.utils.validators import is_ozon_url, parse_price
+from app.utils.validators import is_marketplace_url, parse_price
 
 router = Router(name="add_product")
 
@@ -95,7 +95,7 @@ async def got_url(
     user = await user_repo.ensure_user(from_user.id)
     url = (message.text or "").strip()
 
-    if not is_ozon_url(url):
+    if not is_marketplace_url(url):
         log_product_action(user.id, "invalid_url", url=url[:100])
         await message.answer(
             i18n.t(user.language, "add.invalid_url"),
@@ -126,6 +126,7 @@ async def got_url(
             user.id,
             "fetched_product_info",
             url=url[:100],
+            marketplace=info.marketplace,
             title=info.title[:50],
             price_with_card=info.price_with_card,
             price_no_card=info.price_no_card,
@@ -148,7 +149,6 @@ async def got_url(
         except Exception:
             await message.answer(err_text, reply_markup=cancel_kb(i18n, user.language))
         return
-
     if (await state.get_state()) != AddProduct.waiting_for_url.state:
         return
 
@@ -156,6 +156,7 @@ async def got_url(
     await state.update_data(
         url=url,
         title=info.title,
+        marketplace=info.marketplace,
         current_price=str(chosen) if chosen is not None else None,
     )
 

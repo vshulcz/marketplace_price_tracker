@@ -23,7 +23,7 @@ class OzonBlockedError(RuntimeError):
 
 
 @dataclass
-class ProductInfo:
+class OzonProductInfo:
     title: str
     price_no_card: Decimal | None
     price_with_card: Decimal | None
@@ -132,7 +132,7 @@ class _SeleniumBrowser:
         logger.info("Browser shutdown completed")
 
 
-async def fetch_product_info(url: str, *, retries: int = 2) -> ProductInfo:
+async def fetch_product_info(url: str, *, retries: int = 2) -> OzonProductInfo:
     if not re.search(r"^https?://(www\.)?ozon\.[^/]+/", url, re.IGNORECASE):
         logger.warning("Invalid Ozon URL: %s", url[:100])
         raise ValueError("Not an Ozon product URL")
@@ -188,7 +188,7 @@ async def fetch_product_info(url: str, *, retries: int = 2) -> ProductInfo:
             if not price_with_card and not price_no_card:
                 logger.warning("Could not extract any prices from: %s", url[:100])
 
-            result = ProductInfo(
+            result = OzonProductInfo(
                 title=title, price_with_card=price_with_card, price_no_card=price_no_card
             )
 

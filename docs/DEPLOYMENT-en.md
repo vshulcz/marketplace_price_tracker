@@ -19,7 +19,7 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 # 3. Create secrets
-kubectl create secret generic bot-secrets -n ozon-bot-prod \
+kubectl create secret generic bot-secrets -n marketplace-bot-prod \
   --from-literal=BOT_TOKEN='your_telegram_bot_token' \
   --from-literal=POSTGRES_PASSWORD='your_db_password'
 
@@ -27,7 +27,7 @@ kubectl create secret generic bot-secrets -n ozon-bot-prod \
 kubectl apply -f k8s/argocd/application-prod.yaml
 
 # 5. Monitor deployment
-kubectl get pods -n ozon-bot-prod
+kubectl get pods -n marketplace-bot-prod
 ```
 
 ## Detailed Setup
@@ -95,12 +95,12 @@ Create secrets for both environments:
 
 ```bash
 # Production
-kubectl create secret generic bot-secrets -n ozon-bot-prod \
+kubectl create secret generic bot-secrets -n marketplace-bot-prod \
   --from-literal=BOT_TOKEN='your_prod_bot_token' \
   --from-literal=POSTGRES_PASSWORD='secure_password'
 
 # Development
-kubectl create secret generic bot-secrets -n ozon-bot-dev \
+kubectl create secret generic bot-secrets -n marketplace-bot-dev \
   --from-literal=BOT_TOKEN='your_dev_bot_token' \
   --from-literal=POSTGRES_PASSWORD='dev_password'
 ```
@@ -132,15 +132,15 @@ kubectl get applications -n argocd
 Check pods:
 
 ```bash
-kubectl get pods -n ozon-bot-prod
-kubectl get pods -n ozon-bot-dev
+kubectl get pods -n marketplace-bot-prod
+kubectl get pods -n marketplace-bot-dev
 ```
 
 View logs:
 
 ```bash
-kubectl logs -f deployment/ozon-bot -n ozon-bot-prod
-kubectl logs -f deployment/postgres -n ozon-bot-prod
+kubectl logs -f deployment/marketplace-bot -n marketplace-bot-prod
+kubectl logs -f deployment/postgres -n marketplace-bot-prod
 ```
 
 ## Architecture
@@ -151,10 +151,10 @@ GitHub Repository (main branch)
 ArgoCD (polls every 3 min)
     ↓
 K3s Cluster
-    ├── Namespace: ozon-bot-prod
+    ├── Namespace: marketplace-bot-prod
     │   ├── PostgreSQL (PVC: 5Gi)
     │   └── Bot (resources: 512Mi-1Gi)
-    └── Namespace: ozon-bot-dev
+    └── Namespace: marketplace-bot-dev
         ├── PostgreSQL (emptyDir)
         └── Bot (resources: 256Mi-512Mi)
 ```
@@ -204,15 +204,15 @@ Configured via ConfigMap (`k8s/base/configmap.yaml`):
 ### Backup
 
 ```bash
-kubectl exec -n ozon-bot-prod deployment/postgres -- \
+kubectl exec -n marketplace-bot-prod deployment/postgres -- \
   pg_dump -U admin price_tracker_bot > backup-$(date +%Y%m%d).sql
 ```
 
 ### Restore
 
 ```bash
-kubectl cp backup.sql -n ozon-bot-prod postgres-pod:/tmp/restore.sql
-kubectl exec -n ozon-bot-prod postgres-pod -- \
+kubectl cp backup.sql -n marketplace-bot-prod postgres-pod:/tmp/restore.sql
+kubectl exec -n marketplace-bot-prod postgres-pod -- \
   psql -U admin -d price_tracker_bot -f /tmp/restore.sql
 ```
 
@@ -220,7 +220,7 @@ kubectl exec -n ozon-bot-prod postgres-pod -- \
 
 ```bash
 # Port-forward PostgreSQL
-kubectl port-forward -n ozon-bot-prod svc/postgres 5433:5432
+kubectl port-forward -n marketplace-bot-prod svc/postgres 5433:5432
 
 # DBeaver settings:
 # Host: localhost
@@ -239,13 +239,13 @@ View application status:
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 
 # Logs
-kubectl logs -f -l app=ozon-bot -n ozon-bot-prod
+kubectl logs -f -l app=marketplace-bot -n marketplace-bot-prod
 
 # Events
-kubectl get events -n ozon-bot-prod --sort-by='.lastTimestamp'
+kubectl get events -n marketplace-bot-prod --sort-by='.lastTimestamp'
 
 # Resource usage
-kubectl top pods -n ozon-bot-prod
+kubectl top pods -n marketplace-bot-prod
 ```
 
 ## Troubleshooting
@@ -253,23 +253,23 @@ kubectl top pods -n ozon-bot-prod
 ### Pod not starting
 
 ```bash
-kubectl describe pod -n ozon-bot-prod <pod-name>
-kubectl logs -n ozon-bot-prod <pod-name> --previous
+kubectl describe pod -n marketplace-bot-prod <pod-name>
+kubectl logs -n marketplace-bot-prod <pod-name> --previous
 ```
 
 ### ArgoCD sync failed
 
 ```bash
-kubectl get application ozon-bot-prod -n argocd -o yaml
+kubectl get application marketplace-bot-prod -n argocd -o yaml
 kubectl logs -n argocd -l app.kubernetes.io/name=argocd-application-controller
 ```
 
 ### Database connection issues
 
 ```bash
-kubectl get pods -n ozon-bot-prod -l app=postgres
-kubectl logs -n ozon-bot-prod -l app=postgres
-kubectl exec -n ozon-bot-prod postgres-pod -- psql -U admin -l
+kubectl get pods -n marketplace-bot-prod -l app=postgres
+kubectl logs -n marketplace-bot-prod -l app=postgres
+kubectl exec -n marketplace-bot-prod postgres-pod -- psql -U admin -l
 ```
 
 ### Image pull errors
@@ -277,7 +277,7 @@ kubectl exec -n ozon-bot-prod postgres-pod -- psql -U admin -l
 Check image exists:
 
 ```bash
-docker manifest inspect ghcr.io/vshulcz/ozon_price_tracker:latest
+docker manifest inspect ghcr.io/vshulcz/marketplace_price_tracker:latest
 ```
 
 Verify CI completed:
@@ -297,7 +297,7 @@ Via ArgoCD UI:
 Via CLI:
 
 ```bash
-kubectl rollout undo deployment/ozon-bot -n ozon-bot-prod
+kubectl rollout undo deployment/marketplace-bot -n marketplace-bot-prod
 ```
 
 ## Maintenance
@@ -309,25 +309,25 @@ Push changes to `main` branch. ArgoCD will auto-sync within 3 minutes.
 Force sync:
 
 ```bash
-kubectl patch application ozon-bot-prod -n argocd --type merge \
+kubectl patch application marketplace-bot-prod -n argocd --type merge \
   -p '{"operation":{"sync":{"revision":"HEAD"}}}'
 ```
 
 ### Scale deployment
 
 ```bash
-kubectl scale deployment ozon-bot -n ozon-bot-prod --replicas=2
+kubectl scale deployment marketplace-bot -n marketplace-bot-prod --replicas=2
 ```
 
 ### Update secrets
 
 ```bash
-kubectl delete secret bot-secrets -n ozon-bot-prod
-kubectl create secret generic bot-secrets -n ozon-bot-prod \
+kubectl delete secret bot-secrets -n marketplace-bot-prod
+kubectl create secret generic bot-secrets -n marketplace-bot-prod \
   --from-literal=BOT_TOKEN='new_token' \
   --from-literal=POSTGRES_PASSWORD='new_password'
-kubectl rollout restart deployment/ozon-bot -n ozon-bot-prod
-kubectl rollout restart deployment/postgres -n ozon-bot-prod
+kubectl rollout restart deployment/marketplace-bot -n marketplace-bot-prod
+kubectl rollout restart deployment/postgres -n marketplace-bot-prod
 ```
 
 ## Remote Access

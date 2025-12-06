@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ozon-bot
+  name: marketplace-bot
   labels:
-    app: ozon-bot
+    app: marketplace-bot
 spec:
   replicas: 1
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: ozon-bot
+      app: marketplace-bot
   template:
     metadata:
       labels:
-        app: ozon-bot
+        app: marketplace-bot
     spec:
       initContainers:
         - name: wait-for-postgres
@@ -37,7 +37,7 @@ spec:
               cpu: "100m"
       containers:
         - name: bot
-          image: ghcr.io/vshulcz/ozon_price_tracker:latest
+          image: ghcr.io/vshulcz/marketplace_price_tracker:latest
           env:
             - name: LOG_LEVEL
               valueFrom:

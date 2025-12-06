@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
 - ../../base
 
-namespace: ozon-bot-dev
+namespace: marketplace-bot-dev
 
 labels:
 - pairs:
@@ -12,7 +12,7 @@ labels:
     tier: development
 
 images:
-- name: ghcr.io/vshulcz/ozon_price_tracker
+- name: ghcr.io/vshulcz/marketplace_price_tracker
   newTag: sha-35e9486
 
 patches:
@@ -29,6 +29,6 @@ patchesJson6902:
 
 replicas:
 - count: 1
-  name: ozon-bot
+  name: marketplace-bot
 - count: 1
   name: postgres
