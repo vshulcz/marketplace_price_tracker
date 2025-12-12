@@ -4,8 +4,9 @@ kind: Kustomization
 namespace: monitoring
 
 resources:
-  - ../common
+    - ../common
+    - prometheus-rbac.yaml
 
 patches:
-  - path: patches/prometheus-storage.yaml
-  - path: patches/grafana-auth.yaml
+    - path: patches/prometheus-storage.yaml
+    - path: patches/grafana-auth.yaml
