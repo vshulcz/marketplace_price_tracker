@@ -5,8 +5,8 @@ namespace: monitoring-dev
 
 resources:
     - ../common
+    - prometheus-rbac.yaml
 
 patches:
     - path: patches/prometheus-storage.yaml
     - path: patches/grafana-auth.yaml
-    - path: patches/prometheus-rbac.yaml
