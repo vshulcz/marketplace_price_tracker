@@ -30,7 +30,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "marketplace-prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -108,7 +108,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "marketplace-prometheus"
               },
               "editorMode": "code",
               "expr": "rate(marketplace_bot_updates_total[5m])",
@@ -123,7 +123,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "marketplace-prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -201,7 +201,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "marketplace-prometheus"
               },
               "editorMode": "code",
               "expr": "increase(marketplace_bot_notifications_total[5m])",
@@ -216,7 +216,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "marketplace-prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -294,7 +294,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "marketplace-prometheus"
               },
               "editorMode": "code",
               "expr": "rate(marketplace_bot_errors_total[5m])",
@@ -309,7 +309,7 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "marketplace-prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -387,7 +387,7 @@ data:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "marketplace-prometheus"
               },
               "editorMode": "code",
               "expr": "histogram_quantile(0.9, rate(marketplace_bot_request_duration_seconds_bucket[5m]))",
