@@ -11,6 +11,7 @@ spec:
     datasource:
         name: Prometheus
         type: prometheus
+        uid: marketplace-prometheus
         access: proxy
         url: http://marketplace-prometheus:9090
         jsonData:

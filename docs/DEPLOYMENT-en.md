@@ -266,6 +266,20 @@ Edit those files (or provide your own overlay) to set environment-specific crede
 
 ### Backup
 
+Nightly automated backups run at 02:00 UTC via the `postgres-backup` CronJob. Every run produces `/backup/price_tracker_bot-<timestamp>.sql` inside the `postgres-backup-pvc` volume and simultaneously mirrors the file to `/srv/backups/price-tracker` on the host, so the most recent copies survive both pod restarts and PVC loss.
+
+```bash
+# Inspect schedule and last run
+kubectl get cronjob -n marketplace-bot-prod postgres-backup
+kubectl get jobs -n marketplace-bot-prod -l component=postgres-backup --sort-by=.metadata.creationTimestamp
+
+# Download the newest backup file to your machine from the hostPath mirror
+ssh root@<server> "ls -1t /srv/backups/price-tracker | head -n 1"
+scp root@<server>:/srv/backups/price-tracker/price_tracker_bot-<timestamp>.sql ./price_tracker_bot.sql
+```
+
+Manual on-demand dump (for example, before risky changes) is still available:
+
 ```bash
 kubectl exec -n marketplace-bot-prod deployment/postgres -- \
   pg_dump -U admin price_tracker_bot > backup-$(date +%Y%m%d).sql
@@ -276,6 +290,7 @@ kubectl exec -n marketplace-bot-prod deployment/postgres -- \
 ```bash
 kubectl cp backup.sql -n marketplace-bot-prod postgres-pod:/tmp/restore.sql
 kubectl exec -n marketplace-bot-prod postgres-pod -- \
+  PGPASSWORD=$(kubectl get secret bot-secrets -n marketplace-bot-prod -o jsonpath='{.data.POSTGRES_PASSWORD}' | base64 -d) \
   psql -U admin -d price_tracker_bot -f /tmp/restore.sql
 ```
 

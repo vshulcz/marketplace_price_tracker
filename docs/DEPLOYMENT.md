@@ -267,6 +267,20 @@ helm upgrade --install grafana-operator grafana/grafana-operator \
 
 ### Бэкап
 
+Автоматические резервные копии запускает CronJob `postgres-backup` каждый день в 02:00 UTC. Каждый запуск сохраняет файл `/backup/price_tracker_bot-<timestamp>.sql` в PVC `postgres-backup-pvc` и параллельно копирует его в `/srv/backups/price-tracker` на хосте, поэтому свежие дампы переживают и рестарты подов, и потенциальную потерю PVC.
+
+```bash
+# Проверить расписание и последние джобы
+kubectl get cronjob -n marketplace-bot-prod postgres-backup
+kubectl get jobs -n marketplace-bot-prod -l component=postgres-backup --sort-by=.metadata.creationTimestamp
+
+# Скачать последнюю копию из зеркала на узле
+ssh root@<server> "ls -1t /srv/backups/price-tracker | head -n 1"
+scp root@<server>:/srv/backups/price-tracker/price_tracker_bot-<timestamp>.sql ./price_tracker_bot.sql
+```
+
+Ручной дамп (например перед рискованными изменениями) по‑прежнему доступен:
+
 ```bash
 kubectl exec -n marketplace-bot-prod deployment/postgres -- \
   pg_dump -U admin price_tracker_bot > backup-$(date +%Y%m%d).sql
@@ -277,6 +291,7 @@ kubectl exec -n marketplace-bot-prod deployment/postgres -- \
 ```bash
 kubectl cp backup.sql -n marketplace-bot-prod postgres-pod:/tmp/restore.sql
 kubectl exec -n marketplace-bot-prod postgres-pod -- \
+  PGPASSWORD=$(kubectl get secret bot-secrets -n marketplace-bot-prod -o jsonpath='{.data.POSTGRES_PASSWORD}' | base64 -d) \
   psql -U admin -d price_tracker_bot -f /tmp/restore.sql
 ```
 
