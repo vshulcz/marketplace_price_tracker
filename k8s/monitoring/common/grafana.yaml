@@ -13,6 +13,13 @@ spec:
         security:
             admin_user: admin
             admin_password: grafana
+    resources:
+        requests:
+            memory: 128Mi
+            cpu: 100m
+        limits:
+            memory: 256Mi
+            cpu: 200m
     dashboards:
         configMaps:
             - name: marketplace-grafana-dashboards
