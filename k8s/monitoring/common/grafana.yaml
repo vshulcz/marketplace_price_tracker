@@ -9,8 +9,8 @@ spec:
         enabled: false
     config:
         auth:
-            disable_login_form: false
-            disable_signout_menu: false
+            disable_login_form: "false"
+            disable_signout_menu: "false"
         security:
             admin_user: admin
             admin_password: grafana
