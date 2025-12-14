@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from aiohttp import web
-from prometheus_client import CONTENT_TYPE_LATEST, Counter, Gauge, Histogram, generate_latest
+from prometheus_client import Counter, Gauge, Histogram, generate_latest
 
 # Core bot metrics
 bot_updates_total = Counter(
