@@ -300,7 +300,7 @@ Edit those files (or provide your own overlay) to set environment-specific crede
 
 ##### Grafana alerts
 
-`k8s/monitoring/common/grafana-alerts.yaml` provisions a `GrafanaRule` folder called “Marketplace Alerts” with several rules wired to the runbooks in this document:
+`k8s/monitoring/common/grafana-alerts.yaml` provisions a `GrafanaAlertRuleGroup` folder called “Marketplace Alerts” with several rules wired to the runbooks in this document:
 
 - `Ozon price scraper failures`/`Wildberries price scraper failures` trigger when `marketplace_bot_requests_total` reports ≥3 non-success results for the respective marketplace within 5 minutes (cookie/run blocking issues).
 - `Scheduler stalled` fires if no successful run was recorded for 10 minutes.

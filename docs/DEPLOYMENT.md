@@ -302,7 +302,7 @@ helm upgrade --install grafana-operator grafana/grafana-operator \
 
 ##### Алерты Grafana
 
-`k8s/monitoring/common/grafana-alerts.yaml` разворачивает папку “Marketplace Alerts” с несколькими правилами и ссылками на соответствующие инструкции в этом документе:
+`k8s/monitoring/common/grafana-alerts.yaml` разворачивает GrafanaAlertRuleGroup в папке “Marketplace Alerts” с несколькими правилами и ссылками на соответствующие инструкции в этом документе:
 
 - `Ozon price scraper failures` и `Wildberries price scraper failures` следят за `marketplace_bot_requests_total` и срабатывают, если за 5 минут накопилось ≥3 попыток с результатом `!= success` (признак блока/ошибки API).
 - `Scheduler stalled` сообщает, что за 10 минут не появилось ни одной успешной синхронизации.
