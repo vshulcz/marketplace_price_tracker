@@ -103,8 +103,8 @@
             "uid": "marketplace-prometheus"
           },
           "editorMode": "code",
-          "expr": "rate(marketplace_bot_updates_total[5m])",
-          "legendFormat": "updates/sec",
+          "expr": "sum(rate(marketplace_bot_updates_total[5m])) or vector(0)",
+          "legendFormat": "updates/sec (total)",
           "range": true,
           "refId": "A"
         }
@@ -289,8 +289,8 @@
             "uid": "marketplace-prometheus"
           },
           "editorMode": "code",
-          "expr": "rate(marketplace_bot_errors_total[5m])",
-          "legendFormat": "errors/sec",
+          "expr": "sum(rate(marketplace_bot_errors_total[5m])) or vector(0)",
+          "legendFormat": "errors/sec (total)",
           "range": true,
           "refId": "A"
         }
@@ -382,7 +382,7 @@
             "uid": "marketplace-prometheus"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.9, rate(marketplace_bot_request_duration_seconds_bucket[5m]))",
+          "expr": "clamp_min(histogram_quantile(0.9, sum by (le)(rate(marketplace_bot_request_duration_seconds_bucket[5m]))), 0) or vector(0)",
           "legendFormat": "p90 latency",
           "range": true,
           "refId": "A"
