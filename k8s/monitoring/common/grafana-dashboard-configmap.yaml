@@ -481,7 +481,7 @@ data:
                 "uid": "marketplace-prometheus"
               },
               "editorMode": "code",
-              "expr": "sum by (result)(rate(marketplace_bot_requests_total{marketplace=\"ozon\"}[5m]))",
+              "expr": "sum by (result)(rate(marketplace_bot_requests_total{marketplace=\"ozon\"}[5m])) or vector(0)",
               "legendFormat": "{{result}}",
               "range": true,
               "refId": "A"
@@ -548,7 +548,7 @@ data:
                 "type": "prometheus",
                 "uid": "marketplace-prometheus"
               },
-              "expr": "sum(rate(marketplace_bot_requests_total{marketplace=\"ozon\",result=\"success\"}[15m])) / sum(rate(marketplace_bot_requests_total{marketplace=\"ozon\"}[15m])) * 100",
+              "expr": "clamp_min(sum(rate(marketplace_bot_requests_total{marketplace=\"ozon\",result=\"success\"}[15m])) / clamp_min(sum(rate(marketplace_bot_requests_total{marketplace=\"ozon\"}[15m])), 1e-09) * 100, 0)",
               "refId": "A"
             }
           ],
@@ -637,7 +637,7 @@ data:
                 "uid": "marketplace-prometheus"
               },
               "editorMode": "code",
-              "expr": "sum by (status)(rate(marketplace_bot_scheduler_runs_total[15m]))",
+              "expr": "sum by (status)(rate(marketplace_bot_scheduler_runs_total[15m])) or vector(0)",
               "legendFormat": "{{status}}",
               "range": true,
               "refId": "A"
@@ -728,7 +728,7 @@ data:
                 "uid": "marketplace-prometheus"
               },
               "editorMode": "code",
-              "expr": "rate(marketplace_bot_products_checked_total[5m])",
+              "expr": "sum(rate(marketplace_bot_products_checked_total[5m])) or vector(0)",
               "legendFormat": "products/min",
               "range": true,
               "refId": "A"
@@ -789,7 +789,7 @@ data:
                 "type": "prometheus",
                 "uid": "marketplace-prometheus"
               },
-              "expr": "increase(marketplace_bot_blocked_total{marketplace=\"ozon\"}[1h])",
+              "expr": "sum(increase(marketplace_bot_blocked_total{marketplace=\"ozon\"}[1h])) or vector(0)",
               "refId": "A"
             }
           ],
@@ -878,7 +878,7 @@ data:
                 "uid": "marketplace-prometheus"
               },
               "editorMode": "code",
-              "expr": "marketplace_bot_products_refresh_inflight",
+              "expr": "sum(marketplace_bot_products_refresh_inflight) or vector(0)",
               "legendFormat": "inflight",
               "range": true,
               "refId": "A"
@@ -969,7 +969,7 @@ data:
                 "uid": "marketplace-prometheus"
               },
               "editorMode": "code",
-              "expr": "histogram_quantile(0.95, sum by (le, marketplace)(rate(marketplace_bot_request_duration_seconds_bucket[5m])))",
+              "expr": "clamp_min(histogram_quantile(0.95, sum by (le, marketplace)(rate(marketplace_bot_request_duration_seconds_bucket[5m]))), 0) or vector(0)",
               "legendFormat": "{{marketplace}}",
               "range": true,
               "refId": "A"
@@ -1030,7 +1030,7 @@ data:
                 "type": "prometheus",
                 "uid": "marketplace-prometheus"
               },
-              "expr": "increase(marketplace_bot_price_check_errors_total[30m])",
+              "expr": "sum(increase(marketplace_bot_price_check_errors_total[30m])) or vector(0)",
               "refId": "A"
             }
           ],
@@ -1089,7 +1089,7 @@ data:
                 "type": "prometheus",
                 "uid": "marketplace-prometheus"
               },
-              "expr": "increase(marketplace_bot_blocked_total{marketplace=\"wildberries\"}[1h])",
+              "expr": "sum(increase(marketplace_bot_blocked_total{marketplace=\"wildberries\"}[1h])) or vector(0)",
               "refId": "A"
             }
           ],
@@ -1148,7 +1148,7 @@ data:
                 "type": "prometheus",
                 "uid": "marketplace-prometheus"
               },
-              "expr": "increase(marketplace_bot_notifications_total[30m])",
+              "expr": "sum(increase(marketplace_bot_notifications_total[30m])) or vector(0)",
               "refId": "A"
             }
           ],
@@ -1238,7 +1238,7 @@ data:
                 "uid": "marketplace-prometheus"
               },
               "editorMode": "code",
-              "expr": "rate(marketplace_bot_price_check_duration_seconds_sum[15m]) / clamp_min(rate(marketplace_bot_price_check_duration_seconds_count[15m]), 1e-06)",
+              "expr": "sum(rate(marketplace_bot_price_check_duration_seconds_sum[15m])) / clamp_min(sum(rate(marketplace_bot_price_check_duration_seconds_count[15m])), 1e-06)",
               "legendFormat": "avg duration",
               "range": true,
               "refId": "A"
