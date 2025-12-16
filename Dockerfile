@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright/python:v1.56.0-noble
+FROM mcr.microsoft.com/playwright/python:v1.57.0-noble
 
 ENV PATH="/app/.venv/bin:$PATH" \
     PYTHONDONTWRITEBYTECODE=1 \
