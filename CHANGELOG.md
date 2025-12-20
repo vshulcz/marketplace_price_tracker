@@ -1,5 +1,99 @@
 # Changelog
 
+## 0.1.0 (2025-12-20)
+
+
+### Features
+
+* add prometheus+grafana ([b7eb32f](https://github.com/vshulcz/marketplace_price_tracker/commit/b7eb32f7e2b50edbfc8092704f20381f055c165f))
+* add prometheus+grafana ([2a5b09f](https://github.com/vshulcz/marketplace_price_tracker/commit/2a5b09f524198703994181d2df4fe6557837637f))
+* add wb scraper ([4d86fd9](https://github.com/vshulcz/marketplace_price_tracker/commit/4d86fd92f1a878dfd7a7827aeb07486643a396ea))
+* add wb scraper ([c79facc](https://github.com/vshulcz/marketplace_price_tracker/commit/c79facc415a19fa423bd75bbf54d82adf0c740e1))
+* argocd, k8s, cd workflow added ([099934c](https://github.com/vshulcz/marketplace_price_tracker/commit/099934c9cf917a597d6130b7b3ac3b58b356d7b5))
+* argocd, k8s, cd workflow added ([0f9d6d9](https://github.com/vshulcz/marketplace_price_tracker/commit/0f9d6d92f0e0bbb9126421e7aaeaff8234ce4970))
+* **cd:** cd workflow fixed ([cc2a733](https://github.com/vshulcz/marketplace_price_tracker/commit/cc2a733a8f45837e001599545ec5636130d17fd6))
+* **cd:** cd workflow modified ([ef2567b](https://github.com/vshulcz/marketplace_price_tracker/commit/ef2567bb9ccf760c1678849052d2eafabf09b64d))
+* ci, tests added ([cb63815](https://github.com/vshulcz/marketplace_price_tracker/commit/cb638155a422c94f7c359de8cefb9de111e3a2d8))
+* ci, tests added ([9e5ffdc](https://github.com/vshulcz/marketplace_price_tracker/commit/9e5ffdc5fcde7e6963657f3dff5fe42608c2159b))
+* **ci:** add new workflow - deploy on dev ([eb01460](https://github.com/vshulcz/marketplace_price_tracker/commit/eb014607bc5438eec5c543b737a8cf5802942997))
+* **ci:** add release-please manual ([49f38f0](https://github.com/vshulcz/marketplace_price_tracker/commit/49f38f0302c7cdd193cd65e656950dca647f50ab))
+* **ci:** auto-comment PR with deployment instructions after build ([6c389f4](https://github.com/vshulcz/marketplace_price_tracker/commit/6c389f4eb7f0b468d898541008c971db30e95d49))
+* **grafana:** add lerting ([2d2924b](https://github.com/vshulcz/marketplace_price_tracker/commit/2d2924b2c98d43944fd516a83c9f54ebff049aa4))
+* **grafana:** dashboards added ([2b90a53](https://github.com/vshulcz/marketplace_price_tracker/commit/2b90a5328d23a35185b6bc4a3a794b5f6d0260c6))
+* logging upgraded ([a66af62](https://github.com/vshulcz/marketplace_price_tracker/commit/a66af62a7fbd3f361af0003ea6c228dd838b3337))
+* logging upgraded ([bb490e7](https://github.com/vshulcz/marketplace_price_tracker/commit/bb490e74aa0407600b2a8ba8a7a2d5323246ce35))
+* migrate from Playwright to Selenium with stealth mode ([77eafbd](https://github.com/vshulcz/marketplace_price_tracker/commit/77eafbd207e20ec8bdb614038c3a49bdc07bf18c))
+* migrate from Playwright to Selenium with stealth mode ([6f579bb](https://github.com/vshulcz/marketplace_price_tracker/commit/6f579bbfc2f41590e1e033a2de66b23f7f34a816))
+* optimize ozon crawler ([2ebd707](https://github.com/vshulcz/marketplace_price_tracker/commit/2ebd7074ce05dd8a6509621666b50ef7a5350047))
+* regularly backuping ([84c540e](https://github.com/vshulcz/marketplace_price_tracker/commit/84c540ee347677004d964ce6802f69fd7aac0b3f))
+* security upgraded ([272f657](https://github.com/vshulcz/marketplace_price_tracker/commit/272f6572b954cc9733e47cc0073f952e4cb398ae))
+
+
+### Bug Fixes
+
+* app name ([f774a90](https://github.com/vshulcz/marketplace_price_tracker/commit/f774a9026004e302083044e1fb3e12af79b883a9))
+* **ci:** add fetch-depth 0 for git fetch to work ([f8deb61](https://github.com/vshulcz/marketplace_price_tracker/commit/f8deb619ded1a26fa737472e434f1e4d1706008e))
+* **ci:** disabled updating images from release-please versions ([5ce7367](https://github.com/vshulcz/marketplace_price_tracker/commit/5ce7367d02b8d179c56d4f524c0ce00d3397dde2))
+* **ci:** fetch fresh SHA from branch instead of cached PR data ([9300478](https://github.com/vshulcz/marketplace_price_tracker/commit/930047822c5c976bc9747fdc1d6694a58e3576ae))
+* **ci:** find latest successfully built image instead of latest commit ([ffcbb60](https://github.com/vshulcz/marketplace_price_tracker/commit/ffcbb60dee2663b43a0c76510b90a47b6f90dd20))
+* **ci:** postgres-pvc ([27ea903](https://github.com/vshulcz/marketplace_price_tracker/commit/27ea903af680ed4cce3f9478e578bf9ba1e29bbb))
+* **ci:** postgres-pvc ([601a5d2](https://github.com/vshulcz/marketplace_price_tracker/commit/601a5d292d3bad845c3795a9e83c40426d81f63b))
+* **ci:** postgres-pvc ([53c83f7](https://github.com/vshulcz/marketplace_price_tracker/commit/53c83f7f3b07f7eeadded9fd1a7edd5642dcc849))
+* **ci:** postgres-pvc ([851c978](https://github.com/vshulcz/marketplace_price_tracker/commit/851c978555766f4a27fc8a909d11fb9f0603226c))
+* **ci:** publish Docker image with 'latest' tag for main branch ([f0fdfb3](https://github.com/vshulcz/marketplace_price_tracker/commit/f0fdfb3054eb06823214e84733a74e53b7ece051))
+* **ci:** simplify deploy workflow - manual image tag input ([a913ac2](https://github.com/vshulcz/marketplace_price_tracker/commit/a913ac25d771776bccdafd952f7aeab635260f7e))
+* coverage increased ([6b6ded1](https://github.com/vshulcz/marketplace_price_tracker/commit/6b6ded141f4178b6291f5c15751b5ea9591ae349))
+* **db:** handle None values for is_bot and is_premium ([fd99209](https://github.com/vshulcz/marketplace_price_tracker/commit/fd99209e81e7f34ee8542303c403bae11a56f92c))
+* **docker:** update Playwright image to v1.56.0-noble ([0e2a6a4](https://github.com/vshulcz/marketplace_price_tracker/commit/0e2a6a48f480d0496bcea5586e2beddffe93f3ae))
+* **grafana:** alerting ([b117e5e](https://github.com/vshulcz/marketplace_price_tracker/commit/b117e5e0b4b31dffe6661415deaad0a2d611d45f))
+* **grafana:** alerting ([cb23a8f](https://github.com/vshulcz/marketplace_price_tracker/commit/cb23a8fef34221d0f268492b1f79c0e846b284dd))
+* **grafana:** alerting ([75bfbd2](https://github.com/vshulcz/marketplace_price_tracker/commit/75bfbd255c41c170d692dda9bb46e6e790d46b57))
+* **grafana:** alerting ([548c01e](https://github.com/vshulcz/marketplace_price_tracker/commit/548c01e70cb8236a3c2ea98a3d69e1e8b697a4b8))
+* **grafana:** dashboards ([3d02008](https://github.com/vshulcz/marketplace_price_tracker/commit/3d02008b0d278b0d827f7d137dfc3c2530d72252))
+* **grafana:** deployment issue ([5969166](https://github.com/vshulcz/marketplace_price_tracker/commit/59691662b92f722d864c399e484af38d51e2db34))
+* **grafana:** deployment issue ([6eeb921](https://github.com/vshulcz/marketplace_price_tracker/commit/6eeb921ba12f46eb08cbe45d572cf3b9cdce592a))
+* **grafana:** deployment issue ([9a9e919](https://github.com/vshulcz/marketplace_price_tracker/commit/9a9e919b7246a5a4848cd73b80e0c4ecedb1c497))
+* **grafana:** deployment issue ([bd7a44d](https://github.com/vshulcz/marketplace_price_tracker/commit/bd7a44d81c438165f739c9cdd4cc58c216a32ea3))
+* **grafana:** deployment issue ([f60b06c](https://github.com/vshulcz/marketplace_price_tracker/commit/f60b06c1e4bf3cb92c2fb9473a8ed2e56beb4de1))
+* **grafana:** graphics ([c3b686a](https://github.com/vshulcz/marketplace_price_tracker/commit/c3b686aa3927f3720c9b99010f305b6ef0e3d321))
+* **grafana:** monitoring dev storage/ingress and add prod persistence ([a39ec0c](https://github.com/vshulcz/marketplace_price_tracker/commit/a39ec0cbd70fa4b17c1d08bde9f22249ce6ed285))
+* increase resources and add shared memory for Playwright browser ([79d2497](https://github.com/vshulcz/marketplace_price_tracker/commit/79d2497e53ea513d796d074eac616e424bdf8d4c))
+* increase resources for playwright ([e4cd224](https://github.com/vshulcz/marketplace_price_tracker/commit/e4cd224c6613474ebedc2a4f423fa703f827850a))
+* increased bot resources ([3e3c9dc](https://github.com/vshulcz/marketplace_price_tracker/commit/3e3c9dc12ff6f10b3e97ee4bc57091684a1320ae))
+* **k8s:** change postgres PGDATA to /pgdata to avoid mount conflicts ([bb6c38a](https://github.com/vshulcz/marketplace_price_tracker/commit/bb6c38a40c59453c49f94229391ce36ba2c1425b))
+* **k8s:** prod autodeploy ([69e63e7](https://github.com/vshulcz/marketplace_price_tracker/commit/69e63e70e0d332862cf63665469a77938678344e))
+* **k8s:** prod autodeploy ([8fd9bef](https://github.com/vshulcz/marketplace_price_tracker/commit/8fd9bef081427576d2dfa34986b80bfe58952cad))
+* **k8s:** properly replace PVC with emptyDir for dev PostgreSQL using JSON patch ([3fc87bf](https://github.com/vshulcz/marketplace_price_tracker/commit/3fc87bff7840795eb4f7c195cbe121e208efc9a1))
+* **k8s:** reduce production resource requests ([bb5a49b](https://github.com/vshulcz/marketplace_price_tracker/commit/bb5a49b0a2c5e316373991a853d64b71004b31a4))
+* **k8s:** remove secret from ArgoCD management - secrets created manually ([149f870](https://github.com/vshulcz/marketplace_price_tracker/commit/149f870ea49dad2e26e9d7a92e3d659777c2ca16))
+* **k8s:** remove subPath from postgres volumeMount to fix mount errors ([80f44a4](https://github.com/vshulcz/marketplace_price_tracker/commit/80f44a41b7350aaa3574c63facb861f7f765721e))
+* **k8s:** use emptyDir for PostgreSQL in dev environment ([6536cd1](https://github.com/vshulcz/marketplace_price_tracker/commit/6536cd129b78fa6947e6a9d54688adec0b5580da))
+* metrics endpoint charset compatibility with aiohttp 3.10 ([9f04710](https://github.com/vshulcz/marketplace_price_tracker/commit/9f047109f61e355a6478f85a56f657409398665e))
+* metrics endpoint charset compatibility with aiohttp 3.10 ([9eb671d](https://github.com/vshulcz/marketplace_price_tracker/commit/9eb671d2d7d2b637617f169d89273d799e47fb6b))
+* ozon client improvements ([e03af0d](https://github.com/vshulcz/marketplace_price_tracker/commit/e03af0d1a3c5015edf9b37abe25012bcd47cfc8b))
+* ozon client improvements ([be409c4](https://github.com/vshulcz/marketplace_price_tracker/commit/be409c4441f25464a9bd4b8ff18e124d47fe6fed))
+* pg session ([256608d](https://github.com/vshulcz/marketplace_price_tracker/commit/256608da3fa22b2529ee36cb9121d4e81fc23c1c))
+* pg session ([d5d3c07](https://github.com/vshulcz/marketplace_price_tracker/commit/d5d3c07d051c8ebc0f8117cf188ab4f65688da05))
+* playwright version ([aa2193e](https://github.com/vshulcz/marketplace_price_tracker/commit/aa2193eea51665c8db43e159b67c707b53be00d7))
+* **prometheus:** metric names ([2df9e39](https://github.com/vshulcz/marketplace_price_tracker/commit/2df9e39f8a2c3f12f9ab0a19986550e74ee63ed5))
+* **prometheus:** prometheus version locked ([36f8edd](https://github.com/vshulcz/marketplace_price_tracker/commit/36f8eddc2f387a7a7e131f37061e382d891b63f1))
+* reduced resources utilization ([6d73e0c](https://github.com/vshulcz/marketplace_price_tracker/commit/6d73e0c56f21629472ba927c2a696c556d4ef3fe))
+* release-please ([a3d718b](https://github.com/vshulcz/marketplace_price_tracker/commit/a3d718b3d3ab8db147bcb46bc243aabab17347bf))
+* remove labels from kustomization to avoid immutable selector errors ([428cb05](https://github.com/vshulcz/marketplace_price_tracker/commit/428cb05fd80400fc285a40549399f5d9083e9e86))
+* **telegram:** handle None values for is_bot and is_premium ([3680d2a](https://github.com/vshulcz/marketplace_price_tracker/commit/3680d2af4d58aab1c233e63f7e85393f9b9737e5))
+
+
+### Performance Improvements
+
+* disable access logs for metrics endpoint ([7c9421c](https://github.com/vshulcz/marketplace_price_tracker/commit/7c9421cb7e844a15a9edd2eb7fae3a6eeff09045))
+
+
+### Documentation
+
+* deployment guide ([b1f8b2f](https://github.com/vshulcz/marketplace_price_tracker/commit/b1f8b2fc9aa0e25dde82592996555ad32b197cd8))
+* readme updated ([509d5f1](https://github.com/vshulcz/marketplace_price_tracker/commit/509d5f1c52edcdab08f4671636fb6a947809d958))
+* readme updated ([7247620](https://github.com/vshulcz/marketplace_price_tracker/commit/72476206801d2efcde571a2f21599badf707dbd8))
+
 ## [1.1.0](https://github.com/vshulcz/marketplace_price_tracker/compare/v1.0.0...v1.1.0) (2025-12-16)
 
 
